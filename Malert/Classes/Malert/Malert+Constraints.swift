@@ -23,22 +23,21 @@ extension Malert {
       visibleView.layoutIfNeeded()
       
       NSLayoutConstraint.deactivate(malertConstraints)
+      
+      let leadingConstraint = malertView.leadingAnchor.constraint(equalTo: visibleView.leadingAnchor, constant: 16)
+      leadingConstraint.priority = .defaultHigh
+      let trailingConstraint = malertView.trailingAnchor.constraint(equalTo: visibleView.trailingAnchor, constant: -16)
+      trailingConstraint.priority = .defaultHigh
+      let widthConstraint = malertView.widthAnchor.constraint(lessThanOrEqualToConstant: 350)
+      widthConstraint.priority = .required
+      
       malertConstraints = [
          malertView.centerXAnchor.constraint(equalTo: visibleView.centerXAnchor),
          malertView.centerYAnchor.constraint(equalTo: visibleView.centerYAnchor),
-         malertView.trailingAnchor.constraint(equalTo: visibleView.trailingAnchor, constant: -16),
-         malertView.leadingAnchor.constraint(equalTo: visibleView.leadingAnchor, constant: 16)
+         trailingConstraint,
+         leadingConstraint,
+         widthConstraint
       ]
-      
-      if UIDevice.current.orientation.isLandscape {
-         let topContraint = malertView.topAnchor.constraint(equalTo: visibleView.topAnchor, constant: 16)
-         topContraint.priority = UILayoutPriority(900)
-         malertConstraints.append(topContraint)
-         
-         let bottomConstraint = malertView.bottomAnchor.constraint(equalTo: visibleView.bottomAnchor, constant: -16)
-         bottomConstraint.priority = UILayoutPriority(900)
-         malertConstraints.append(bottomConstraint)
-      }
       
       NSLayoutConstraint.activate(malertConstraints)
       malertView.layoutIfNeeded()
